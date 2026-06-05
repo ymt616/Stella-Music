@@ -7,7 +7,6 @@ import { PlayerProvider } from './context/PlayerContext'
 import { api } from './api/spotify'
 
 import Sidebar from './components/Layout/Sidebar'
-import Topbar from './components/Layout/Topbar'
 import Player from './components/Layout/Player'
 
 import Login from './pages/Login'
@@ -141,7 +140,6 @@ function AppLayout() {
             />
           </div>
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-            <Topbar />
             <main
               className="main-scroll"
               style={{
