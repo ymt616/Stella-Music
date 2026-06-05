@@ -41,10 +41,11 @@ export default function TrackCard({ track, index, contextUri, showIndex = false,
       className="track-card"
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
+      onClick={handlePlay}
       style={{
         display: 'grid',
         gridTemplateColumns: showIndex
-          ? '40px 40px 1fr auto auto'
+          ? '28px 40px 1fr auto auto'
           : '40px 1fr auto auto',
         alignItems: 'center',
         gap: '10px',
@@ -56,34 +57,21 @@ export default function TrackCard({ track, index, contextUri, showIndex = false,
           ? 'rgba(255,255,255,0.03)'
           : 'transparent',
         transition: 'background var(--transition)',
-        cursor: 'default',
+        cursor: 'pointer',
         borderLeft: isActive ? '2px solid var(--accent)' : '2px solid transparent',
       }}
-      onDoubleClick={handlePlay}
     >
-      {/* Index / play button */}
-      <button
-        onClick={handlePlay}
-        style={{
-          width: 36, height: 36,
-          borderRadius: '50%',
-          background: isActive ? 'var(--accent-glow)' : 'transparent',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: isActive ? 'var(--accent)' : 'var(--text-muted)',
-          transition: 'all var(--transition)',
-          flexShrink: 0,
-        }}
-      >
-        {(hovering || isActive) ? (
-          isActive && isPlaying
-            ? <IconPause size={14} strokeWidth={2.5} />
-            : <IconPlay size={14} strokeWidth={2.5} style={{ marginLeft: 2 }} />
-        ) : (
-          showIndex
-            ? <span style={{ fontSize: '13px', color: 'var(--text-muted)', fontVariantNumeric: 'tabular-nums' }}>{index + 1}</span>
-            : <IconPlay size={14} strokeWidth={2} style={{ marginLeft: 2 }} />
-        )}
-      </button>
+      {/* Index number (only shown when showIndex, no play button) */}
+      {showIndex && (
+        <span style={{
+          fontSize: '12px', color: isActive ? 'var(--accent)' : 'var(--text-muted)',
+          fontVariantNumeric: 'tabular-nums', textAlign: 'center', flexShrink: 0,
+        }}>
+          {isActive && isPlaying
+            ? <IconPause size={12} strokeWidth={2.5} />
+            : index + 1}
+        </span>
+      )}
 
       {/* Album art */}
       <img
