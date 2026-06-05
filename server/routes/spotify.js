@@ -98,7 +98,7 @@ router.get('/playlists/:id', requireToken, async (req, res) => {
 router.get('/playlists/:id/tracks', requireToken, async (req, res) => {
   try {
     const data = await spotifyGet(req.token, `/playlists/${req.params.id}/items`, {
-      limit: Math.min(parseInt(req.query.limit) || 10, 10),
+      limit: parseInt(req.query.limit) || 50,
       offset: req.query.offset || 0,
     });
     res.json(data);
@@ -108,7 +108,7 @@ router.get('/playlists/:id/tracks', requireToken, async (req, res) => {
 router.get('/playlists/:id/items', requireToken, async (req, res) => {
   try {
     const data = await spotifyGet(req.token, `/playlists/${req.params.id}/items`, {
-      limit: Math.min(parseInt(req.query.limit) || 10, 10),
+      limit: parseInt(req.query.limit) || 50,
       offset: req.query.offset || 0,
     });
     res.json(data);

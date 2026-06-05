@@ -51,7 +51,7 @@ export const api = {
 
   // Playlist endpoints: /tracks → /items (Feb 2026 change)
   getPlaylistTracks: (token, id, offset = 0) =>
-    spotifyApi(token).get(`/playlists/${id}/items`, { params: { offset, limit: 10 } }),
+    spotifyApi(token).get(`/playlists/${id}/items`, { params: { offset, limit: 50 } }),
   addTracksToPlaylist: (token, id, uris) =>
     spotifyApi(token).post(`/playlists/${id}/items`, { uris }),
   removeTracksFromPlaylist: (token, id, uris) =>
