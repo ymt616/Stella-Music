@@ -78,15 +78,20 @@ export function AuthProvider({ children }) {
   }, [logout])
 
   useEffect(() => {
-    // Only restore if we have a refresh token stored
     const stored = localStorage.getItem('bloom_rt')
     if (stored) {
       refreshToken(stored)
         .then(data => {
-          if (data.access_token) setTokens(data.access_token, data.refresh_token || stored, data.expires_in)
-          else localStorage.removeItem('bloom_rt')
+          if (data?.access_token) {
+            setTokens(data.access_token, data.refresh_token || stored, data.expires_in)
+          } else {
+            localStorage.removeItem('bloom_rt')
+          }
         })
-        .catch(() => localStorage.removeItem('bloom_rt'))
+        .catch(() => {
+          // Server may be cold-starting — clear token and show login page cleanly
+          localStorage.removeItem('bloom_rt')
+        })
         .finally(() => setLoading(false))
     } else {
       setLoading(false)
