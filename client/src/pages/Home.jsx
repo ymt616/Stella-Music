@@ -50,7 +50,12 @@ export default function Home() {
       api.getTopArtists(tokenStore.get()).catch(() => ({ data: { items: [] } })),
       api.getPlaylists(tokenStore.get()).catch(() => ({ data: { items: [] } })),
     ]).then(([recent, top, artists, playlists]) => {
-      setRecentTracks(recent.data.items?.slice(0, 6).map(i => i.track) || [])
+      const seen = new Set()
+      const deduped = (recent.data.items || [])
+        .map(i => i.track)
+        .filter(t => t && !seen.has(t.id) && seen.add(t.id))
+        .slice(0, 6)
+      setRecentTracks(deduped)
       setTopTracks(top.data.items?.slice(0, 8) || [])
       setTopArtists(artists.data.items?.slice(0, 6) || [])
       setFeaturedPlaylists(playlists.data.items?.slice(0, 6) || [])
